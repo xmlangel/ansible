@@ -13,24 +13,32 @@ xmlangel/sshd
 
 ````
 ansible -i hosts all -m ping
-
 ````
+
 - 서버정보
 
-  check-setup.sh
-  ```
-  ansible -i hosts all -m setup
-  ```
-
-  - file 복사
-  copy-file.sh
-
-  ```
-  ansible -i hosts all -m copy -a 'src=/etc/fstab dest=/tmp/fstab'
-  ```
-
-  - file 정보
-  get-file-info.sh
+check-setup.sh
 ```
-  ansible -i hosts all -m file -a 'path=/etc/fstab'
+ansible -i hosts all -m setup
+```
+
+- file 복사
+
+copy-file.sh
+
+```
+ansible -i hosts all -m copy -a 'src=/etc/fstab dest=/tmp/fstab'
+```
+
+- file 정보
+
+get-file-info.sh
+```
+ansible -i hosts all -m file -a 'path=/etc/fstab'
+```
+- 디렉토리생성
+
+create-dir.sh
+```
+ansible -i hosts all -m file -a 'path=/tmp/test state=directory mode=700 owner=kwang'
 ```
