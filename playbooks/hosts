@@ -1,9 +1,10 @@
 [web]
 172.17.0.3
 172.17.0.2
+172.17.0.4
 
 [localhost]
-localhost ansible_connection=local
+127.0.0.1
 
 [all:vars]
 ansible_connection=ssh

@@ -1,0 +1,14 @@
+vars:
+ ssh_users:
+  - name: user1
+    key: "{{ lookup('file', 'user1.pub') }}"
+  - name: user2
+    key: "{{ lookup('file', 'user2.pub') }}"
+  - name: user3
+    key: "{{ lookup('file', 'user3.pub') }}"
+  - name: user4
+    key: "{{ lookup('file', 'user4.pub') }}"
+
+- name: Add ssh user keys
+authorized_key: user={{ item.name }} key="{{ item.key }}"
+with_items: ssh_users

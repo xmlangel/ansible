@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: test connection
+      authorized_key:
+       user: kwang
+       state: present
+       key: "{{ lookup('file', '/home/kwang/.ssh/id_rsa.pub') }}"
