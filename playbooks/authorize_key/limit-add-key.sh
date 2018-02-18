@@ -5,7 +5,7 @@ LIMITS=$3
 
 run(){
 echo " ansible hosts-list is below:\n please check it\n"
-ansible-playbook -i $HOSTS_LIST --limit $LIMITS $PLAYBOOK --list-hosts
+ansible-playbook -i $HOSTS_LIST $LIMITS $PLAYBOOK --list-hosts
 
 echo -n "Do you want run this?:(y/n) "
 # -n 옵션은 뉴라인을 제거해 줍니다.
@@ -16,7 +16,7 @@ read runable
 case $runable in  
   y)
     echo "Ansible is running...."
-    ansible-playbook -i ../hosts --limit web add-ssh-keys.yml
+    ansible-playbook -i $HOSTS_LIST $LIMITS $PLAYBOOK
     ;;
   *)
 
@@ -27,18 +27,25 @@ case $runable in
 
 usage(){
 	echo "-------------------------------------------------------------------------"
-    echo "[ Usage ] $0 HOSTLISTS PLAYBOOK LISTS"
+    echo "[ Usage ] $0 [HOSTLISTS] [PLAYBOOK] <LIMITS>"
     echo ""
     echo "[ Usage ] $0 ../hosts add-ssh-keys.yml web"
+    echo "ansible-playbook -i hosts web add-ssh-keys.yml --list-hosts"
+    echo "ansible-playbook -i hosts --limit web add-ssh-keys.yml"
+
     echo "-------------------------------------------------------------------------"
 }
 
-if [ $# -eq 3 ]
+if [ $# -ge 2 ]
         then
+             if [ -z "$3" ]
+                then
+                   echo "No arguments supplied in limit. It will set all "
+              else 
+              LIMITS="--limit $3"
+
+             fi
             run
-#elif [ $3 -eq 0 ]
-#        then 
-#            print "ttt"
 else
         usage
         exit
